@@ -1,0 +1,170 @@
+:root{
+    --color-main: #cf321d;
+    --color-bg: #1c1920;
+    --color-text: white;
+    --color-sub-text: gray;
+}
+
+.text-main{
+    color: var(--color-text);
+}
+
+.text-sub{
+    color: var(--color-sub-text);
+}
+
+.text-theme{
+    color: var(--color-main);
+}
+
+.text-dark{
+    color: var(--color-bg);
+}
+
+.bg-main{
+    background-color: var(--color-main);
+}
+
+.bg-background{
+    background-color: var(--color-bg);
+}
+
+.translate-middle-ny{
+    transform: translateY(50%);
+}
+
+/* ----------------------- start bracket  -----------------------*/
+
+body{
+  /* height: 100vh; */
+}
+
+.my-container{
+    width: 2142px;
+    padding: 100rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* pairss in diff levels */
+
+#bracket-right{
+    position: relative;
+    left: -.5rem;
+}
+
+#bracket-left{
+    position: relative;
+    right: -.5rem;
+}
+
+.pair{
+    border: 1px solid var(--color-main);
+    border-left: transparent;
+    width: 16rem;
+}
+
+main ul:nth-child(1) .pair{
+    height: 8rem;
+}
+
+main ul:nth-child(1) .pair:not(:last-child){
+    margin-bottom: 8rem;
+}
+
+main ul:nth-child(2) .pair{
+    height: 16rem;
+    left: -1.5rem;
+}
+
+main ul:nth-child(2) .pair:not(:last-child){
+    margin-bottom: 16rem;
+}
+
+main ul:nth-child(3) .pair{
+    height: 32rem;
+    left: -3rem;
+}
+
+/* ========== right bracket ================ */
+#bracket-right .pair{
+    border: 1px solid var(--color-main);
+    border-right: transparent;
+}
+
+#bracket-right ul:nth-child(2) .pair{
+    right: -1.5rem;
+}
+
+#bracket-right ul:nth-child(3) .pair{
+    right: -3rem;
+}
+
+/* ========== right bracket ================ */
+
+/* team node */
+
+.team{
+    width: 12rem;
+}
+
+.team__img{
+    width: 1.875rem;
+}
+
+/* team root node */
+
+main ul:last-child .team{
+    left: -4.5rem;
+}
+
+/* ========== right bracket ================ */
+#bracket-right ul:last-child .team{
+    right: -4.5rem;
+}
+
+/* team rules */
+.team{
+    background-color: var(--color-bg);
+    color: white;
+    overflow: hidden;
+}
+
+.team::before,
+.team::after{
+    content: "";
+    height: 110%;
+    position: absolute;
+    background-color: var(--color-main);
+   transform: skew(-45deg);
+}
+
+.team::before{
+    width: 5rem;
+    left: -3rem;
+    z-index: 0;
+}
+
+.team img{
+    z-index: 1;
+}
+.team::after{
+    width: .4rem;
+    left: 4.5rem;
+    z-index: 0;
+}
+
+#bracket-right .team::before{
+    right: -3rem;
+}
+
+#bracket-right .team::after{
+    right: 4.5rem;
+}
+
+.team span{
+    background-color: var(--color-bg);
+    padding: .2rem 0;
+    z-index: 1000;
+    width: 100%;
+}

@@ -1,0 +1,39 @@
+{
+    
+    "teams": [
+        { "id": 1, "name": "Team A", "image": "https://via.placeholder.com/30", "theme": "#3498db" },
+        { "id": 2, "name": "Team B", "image": "https://via.placeholder.com/30", "theme": "#e74c3c" },
+        { "id": 3, "name": "Team C", "image": "https://via.placeholder.com/30", "theme": "#2ecc71" },
+        { "id": 4, "name": "Team D", "image": "https://via.placeholder.com/30", "theme": "#f1c40f" },
+        { "id": 5, "name": "Team E", "image": "https://via.placeholder.com/30", "theme": "#9b59b6" },
+        { "id": 6, "name": "Team F", "image": "https://via.placeholder.com/30", "theme": "#1abc9c" },
+        { "id": 7, "name": "Team G", "image": "https://via.placeholder.com/30", "theme": "#d35400" },
+        { "id": 8, "name": "Team H", "image": "https://via.placeholder.com/30", "theme": "#34495e" },
+        { "id": 9, "name": "Team I", "image": "https://via.placeholder.com/30", "theme": "#e67e22" },
+        { "id": 10, "name": "Team J", "image": "https://via.placeholder.com/30", "theme": "#8e44ad" },
+        { "id": 11, "name": "Team K", "image": "https://via.placeholder.com/30", "theme": "#2c3e50" },
+        { "id": 12, "name": "Team L", "image": "https://via.placeholder.com/30", "theme": "#ecf0f1" },
+        { "id": 13, "name": "Team M", "image": "https://via.placeholder.com/30", "theme": "#95a5a6" },
+        { "id": 14, "name": "Team N", "image": "https://via.placeholder.com/30", "theme": "#16a085" },
+        { "id": 15, "name": "Team O", "image": "https://via.placeholder.com/30", "theme": "#2980b9" },
+        { "id": 16, "name": "Team P", "image": "https://via.placeholder.com/30", "theme": "#c0392b" }
+    ],     
+    "matches": [
+      { "round": 1, "match": 1, "team1_id": 1, "team2_id": 2, "winner_id": null },
+      { "round": 1, "match": 2, "team1_id": 3, "team2_id": 4, "winner_id": null },
+      { "round": 1, "match": 3, "team1_id": 5, "team2_id": 6, "winner_id": null },
+      { "round": 1, "match": 4, "team1_id": 7, "team2_id": 8, "winner_id": null },
+      { "round": 1, "match": 5, "team1_id": 9, "team2_id": 10, "winner_id": null },
+      { "round": 1, "match": 6, "team1_id": 11, "team2_id": 12, "winner_id": null },
+      { "round": 1, "match": 7, "team1_id": 13, "team2_id": 14, "winner_id": null },
+      { "round": 1, "match": 8, "team1_id": 15, "team2_id": 16, "winner_id": null },
+      { "round": 2, "match": 1, "team1_id": null, "team2_id": null, "winner_id": null },
+      { "round": 2, "match": 2, "team1_id": null, "team2_id": null, "winner_id": null },
+      { "round": 2, "match": 3, "team1_id": null, "team2_id": null, "winner_id": null },
+      { "round": 2, "match": 4, "team1_id": null, "team2_id": null, "winner_id": null },
+      { "round": 3, "match": 1, "team1_id": null, "team2_id": null, "winner_id": null },
+      { "round": 3, "match": 2, "team1_id": null, "team2_id": null, "winner_id": null },
+      { "round": 4, "match": 1, "team1_id": null, "team2_id": null, "winner_id": null }
+    ]
+  }
+  
