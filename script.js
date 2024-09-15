@@ -1,10 +1,27 @@
-document.addEventListener("DOMContentLoaded", (event) => {
+document.addEventListener("DOMContentLoaded", async (event) => {
 
-    let bracket = new Bracket(document.querySelector("#bracket-container"), 16);
+    let teams, matches;
+    [teams, matches] = await Promise.all([fetchTeams(), fetchMatches()]);
 
+    console.log(teams);
+    console.log(matches);
 
+    let bracket = new Bracket(document.querySelector("#bracket-container"), teams, matches);
+
+    bracket.renderBracket();
 });
 
+async function fetchTeams() {
+    let response = await fetch("./teams.json");
+
+    return await response.json();
+}
+
+async function fetchMatches() {
+    let response = await fetch("./matches.json");
+
+    return await response.json();
+}
 class Bracket {
     /**
      * @typedef {object[]} teams
@@ -26,11 +43,6 @@ class Bracket {
     #matches;
 
     /**
-     * @type {number} teamsNumber
-     */
-    #teamsNumber
-
-    /**
      * @typedef {object} layoutContainer
      * @property {HTMLElement} mainContainer
      * @property {HTMLElement} leftSideBracketContainer
@@ -40,14 +52,18 @@ class Bracket {
 
     /**
      * @param {HTMLElement} container  where bracket should append
-     * @param {number} teamsNumber
+     * @param {object[]} teams
+     * @param {number} teams.id
+     * @param {string} teams.name
+     * @param {string} teams.image url of the image
+     * @param {string} teams.theme hexa color start with #
      * @returns {void}
      */
-    constructor(container, teamsNumber) {
+    constructor(container, teams, matches = []) {
+        this.#layoutContainer = {};
         this.#layoutContainer.mainContainer = container;
-        this.#teamsNumber = teamsNumber;
-        this.#teams = [];
-        this.#matches = [];
+        this.#teams = teams;
+        this.#matches = matches;
     }
 
     //
@@ -61,11 +77,12 @@ class Bracket {
         this.#layoutContainer.mainContainer.append(this.#layoutContainer.rightSideBracketContainer);
 
         //values just for one side
-        let noOfMatches = this.#teamsNumber - 1;
+        let noOfMatches = this.#teams.length - 1;
 
         if (!this.#matches.length)
             this.#fillMatchesWithDefaultValue();
 
+        let noOfRounds = Math.log2(this.#teams.length);
         //append round
         for (let i = 1; i <= noOfRounds; ++i) {
             let matchesAtRoundI = this.#matches.filter(match => match.round === i);
@@ -77,8 +94,8 @@ class Bracket {
 
     #fillMatchesWithDefaultValue() {
 
-        let noOfRounds = Math.log2(this.#teamsNumber);
-        let teamsNumberInRound = this.#teamsNumber / 2; //for one side
+        let noOfRounds = Math.log2(this.#teams.length);
+        let teamsNumberInRound = this.#teams.length / 2; //for one side
 
         //fill matches with all roundes and matches
         for (let i = 1; i <= noOfRounds; ++i) {
@@ -140,24 +157,29 @@ class Bracket {
         pairDiv.classList.add("pair", "position-relative", "rounded");
 
         if (team1Data)
-            pairDiv.appendChild(this.#getTeamNodeAsHTMLElement(team1Data));
+            pairDiv.appendChild(this.#getTeamNodeAsHTMLElement(team1Data, "top"));
         if (team2Data)
-            pairDiv.appendChild(this.#getTeamNodeAsHTMLElement(team2Data));
+            pairDiv.appendChild(this.#getTeamNodeAsHTMLElement(team2Data, "bottom"));
 
         return pairDiv;
     }
 
     /**
     * @param {object} teamData
-    * @property {number} id
-    * @property {string} name
-    * @property {string} image url of the image
-    * @property {string} theme hexa color start with #
+    * @param {number} teamData.id
+    * @param {string} teamData.name
+    * @param {string} teamData.image url of the image
+    * @param {string} teamData.theme hexa color start with #
+    * @param {string} type type can be normal top bottom
     */
-    #getTeamNodeAsHTMLElement(teamData) {
+    #getTeamNodeAsHTMLElement(teamData, type) {
         // Create a div element for the team container
         const teamDiv = document.createElement("div");
-        teamDiv.classList.add("team", "d-flex", "align-items-center", "gap-3", "bg-main", "rounded", "p-2", "position-relative", "top-0", "translate-middle-y");
+        teamDiv.classList.add("team", "d-flex", "align-items-center", "gap-3", "bg-main", "rounded", "p-2", "position-relative");
+        if (type.toLowerCase() == 'top')
+            teamDiv.classList.add("top-0", "translate-middle-y");
+        else if (type.toLowerCase() == "bottom")
+            teamDiv.classList.add("bottom-0", "translate-middle-ny");
 
         // Create the img element for the team logo
         const teamImg = document.createElement("img");

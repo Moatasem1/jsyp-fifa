@@ -51,6 +51,7 @@ body{
 #bracket-right{
     position: relative;
     left: -.5rem;
+    direction: rtl;
 }
 
 #bracket-left{
