@@ -23,18 +23,32 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
 
-  <body class="bg- text-main d-flex align-items-center">
-    <!-- <header>
-      <div class="container py-5 text-center">
-        <h1 class="text-capitalize fw-bold">
+  <body class="bg-background text-main">
+    <div
+      class="page-content h-100vh my-container rounded bg-background d-flex flex-column justify-content-center"
+    >
+      <header class="pt-5 text-center">
+        <h1 class="title text-capitalize fw-bold w-100 mb-0">
           <span class="text-theme">FIFA</span> tournament
         </h1>
-      </div>
-    </header> -->
-    <main
-      id="bracket-container"
-      class="my-container p-5 d-flex align-items-center justify-content-center"
-    ></main>
+      </header>
+      <main class="bracket pb-5 position-relative">
+        <div
+          class="c-blur position-absolute bg-main rounded-circule z-0 top-50 start-50 translate-middle"
+        ></div>
+        <section
+          id="bracket-container"
+          class="d-flex align-items-center justify-content-center"
+        ></section>
+      </main>
+      <video
+        class="background-video w-100 h-100 position-absolute top-0 start-0 z-n1"
+        loop
+        autoplay
+        muted
+        src="./images/video.mp4"
+      ></video>
+    </div>
     <footer>
       <!-- place footer here -->
     </footer>

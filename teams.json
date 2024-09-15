@@ -1,18 +1,18 @@
- [
-        { "id": 1, "name": "Team A", "image": "https://via.placeholder.com/30", "theme": "#3498db" },
-        { "id": 2, "name": "Team B", "image": "https://via.placeholder.com/30", "theme": "#e74c3c" },
-        { "id": 3, "name": "Team C", "image": "https://via.placeholder.com/30", "theme": "#2ecc71" },
-        { "id": 4, "name": "Team D", "image": "https://via.placeholder.com/30", "theme": "#f1c40f" },
-        { "id": 5, "name": "Team E", "image": "https://via.placeholder.com/30", "theme": "#9b59b6" },
-        { "id": 6, "name": "Team F", "image": "https://via.placeholder.com/30", "theme": "#1abc9c" },
-        { "id": 7, "name": "Team G", "image": "https://via.placeholder.com/30", "theme": "#d35400" },
-        { "id": 8, "name": "Team H", "image": "https://via.placeholder.com/30", "theme": "#34495e" },
-        { "id": 9, "name": "Team I", "image": "https://via.placeholder.com/30", "theme": "#e67e22" },
-        { "id": 10, "name": "Team J", "image": "https://via.placeholder.com/30", "theme": "#8e44ad" },
-        { "id": 11, "name": "Team K", "image": "https://via.placeholder.com/30", "theme": "#2c3e50" },
-        { "id": 12, "name": "Team L", "image": "https://via.placeholder.com/30", "theme": "#ecf0f1" },
-        { "id": 13, "name": "Team M", "image": "https://via.placeholder.com/30", "theme": "#95a5a6" },
-        { "id": 14, "name": "Team N", "image": "https://via.placeholder.com/30", "theme": "#16a085" },
-        { "id": 15, "name": "Team O", "image": "https://via.placeholder.com/30", "theme": "#2980b9" },
-        { "id": 16, "name": "Team P", "image": "https://via.placeholder.com/30", "theme": "#c0392b" }
-    ]
+[
+    { "id": 1, "name": "German Jordanian University", "image": "https://robohash.org/team-a", "theme": "#3498db" },
+    { "id": 2, "name": "Al-Zaytoonah University of Jordan", "image": "https://robohash.org/team-b", "theme": "#e74c3c" },
+    { "id": 3, "name": "Hashemite University", "image": "https://robohash.org/team-c", "theme": "#2ecc71" },
+    { "id": 4, "name": "Zarqa University", "image": "https://robohash.org/team-d", "theme": "#f1c40f" },
+    { "id": 5, "name": "Al-Ahliyya Amman University", "image": "https://robohash.org/team-e", "theme": "#9b59b6" },
+    { "id": 6, "name": "University of Petra", "image": "https://robohash.org/team-f", "theme": "#1abc9c" },
+    { "id": 7, "name": "Al-Balqa' Applied University - Center", "image": "https://robohash.org/team-g", "theme": "#d35400" },
+    { "id": 8, "name": "Philadelphia University", "image": "https://robohash.org/team-h", "theme": "#34495e" },
+    { "id": 9, "name": "Al Hussein Technical University", "image": "https://robohash.org/team-i", "theme": "#e67e22" },
+    { "id": 10, "name": "Al al-Bayt University", "image": "https://robohash.org/team-j", "theme": "#8e44ad" },
+    { "id": 11, "name": "Tafila Technical University", "image": "https://robohash.org/team-k", "theme": "#2c3e50" },
+    { "id": 12, "name": "Applied Science Private University", "image": "https://robohash.org/team-l", "theme": "#ecf0f1" },
+    { "id": 13, "name": "University of Jordan", "image": "https://robohash.org/team-m", "theme": "#95a5a6" },
+    { "id": 14, "name": "Al-Hussein Bin Talal University", "image": "https://robohash.org/team-n", "theme": "#16a085" },
+    { "id": 15, "name": "Jordan University of Science and Technology", "image": "https://robohash.org/team-o", "theme": "#2980b9" },
+    { "id": 16, "name": "Yarmouk University", "image": "https://robohash.org/team-p", "theme": "#c0392b" }
+]

@@ -74,6 +74,7 @@ class Bracket {
         this.#layoutContainer.rightSideBracketContainer = this.#getBracketSide("bracket-right");
 
         this.#layoutContainer.mainContainer.append(this.#layoutContainer.leftSideBracketContainer);
+        this.#layoutContainer.mainContainer.append(this.#getCupImageAsHTMLElement());
         this.#layoutContainer.mainContainer.append(this.#layoutContainer.rightSideBracketContainer);
 
         //values just for one side
@@ -84,12 +85,26 @@ class Bracket {
 
         let noOfRounds = Math.log2(this.#teams.length);
         //append round
-        for (let i = 1; i <= noOfRounds; ++i) {
-            let matchesAtRoundI = this.#matches.filter(match => match.round === i);
-            //matchesAtRoundI will contain all matches in both side so we need to divide them
+        let i, matchesAtRoundI;
+        for (i = 1; i < noOfRounds; ++i) {
+            matchesAtRoundI = this.#matches.filter(match => match.round === i);
+
+            //matchesAtRoundI will contain all matches in both side so we need to divid them
             this.#layoutContainer.leftSideBracketContainer.append(this.#getRound(matchesAtRoundI.slice(0, matchesAtRoundI.length / 2)));
             this.#layoutContainer.rightSideBracketContainer.append(this.#getRound(matchesAtRoundI.slice(matchesAtRoundI.length / 2)));
         }
+
+        //add final match
+        matchesAtRoundI = this.#matches.filter(match => match.round === i);
+
+        let team1Data = this.#teams.find(team => team.id === matchesAtRoundI[0].team1_id);
+        let team2Data = this.#teams.find(team => team.id === matchesAtRoundI[0].team2_id);
+
+
+        if (!team1Data || !team2Data) return;;
+
+        this.#layoutContainer.leftSideBracketContainer.append(this.#getTeamNodeAsHTMLElement(team1Data, "normal"));
+        this.#layoutContainer.rightSideBracketContainer.append(this.#getTeamNodeAsHTMLElement(team2Data, "normal"));
     }
 
     #fillMatchesWithDefaultValue() {
@@ -104,6 +119,16 @@ class Bracket {
 
             teamsNumberInRound /= 2;
         }
+    }
+
+    #getCupImageAsHTMLElement() {
+        const cupImg = document.createElement("img");
+
+        cupImg.src = "./images/mario-cup.webp";
+        cupImg.classList.add("img-fluid", "z-1");
+        cupImg.style.minWidth = '260px';
+
+        return cupImg;
     }
 
     /**
@@ -175,11 +200,14 @@ class Bracket {
     #getTeamNodeAsHTMLElement(teamData, type) {
         // Create a div element for the team container
         const teamDiv = document.createElement("div");
-        teamDiv.classList.add("team", "d-flex", "align-items-center", "gap-3", "bg-main", "rounded", "p-2", "position-relative");
+        teamDiv.classList.add("team", "z-1", "d-flex", "align-items-center", "gap-3", "bg-white", "rounded", "p-2", "position-relative");
         if (type.toLowerCase() == 'top')
             teamDiv.classList.add("top-0", "translate-middle-y");
-        else if (type.toLowerCase() == "bottom")
-            teamDiv.classList.add("bottom-0", "translate-middle-ny");
+        else if (type.toLowerCase() == "bottom") {
+            teamDiv.classList.remove("position-relative");
+            teamDiv.classList.add("bottom-0", "translate-middle-ny", "position-absolute");
+        }
+
 
         // Create the img element for the team logo
         const teamImg = document.createElement("img");
@@ -189,10 +217,11 @@ class Bracket {
 
         // Create the span element for the team name
         const teamNameSpan = document.createElement("span");
-        teamNameSpan.classList.add("team__name", "text-uppercase", "fw-semibold");
+        teamNameSpan.classList.add("team__name", "text-uppercase", "fw-semibold", "w-100", "bg-white", "text-dark");
         teamNameSpan.textContent = teamData.name; // Use teamData for the team name
 
         //set theme color
+        teamDiv.style.setProperty("--team-theme", teamData.theme);
 
         // Append the img and span to the team div
         teamDiv.appendChild(teamImg);

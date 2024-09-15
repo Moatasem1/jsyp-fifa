@@ -35,15 +35,24 @@
 
 /* ----------------------- start bracket  -----------------------*/
 
-body{
-  /* height: 100vh; */
+.page-content{
+    height: 100vh;
+}
+
+.title{
+    font-size: 5rem;
 }
 
 .my-container{
-    width: 2142px;
-    padding: 100rem;
+    width: 2300px;
+    padding-inline: 2rem;
     margin-left: auto;
     margin-right: auto;
+}
+
+.background-video{
+    object-fit: cover;
+    opacity: .1;
 }
 
 /* pairss in diff levels */
@@ -115,12 +124,12 @@ main ul:nth-child(3) .pair{
 
 /* team root node */
 
-main ul:last-child .team{
+#bracket-left > .team:last-child{
     left: -4.5rem;
 }
 
 /* ========== right bracket ================ */
-#bracket-right ul:last-child .team{
+#bracket-right > .team:last-child{
     right: -4.5rem;
 }
 
@@ -129,6 +138,7 @@ main ul:last-child .team{
     background-color: var(--color-bg);
     color: white;
     overflow: hidden;
+    border: 1px solid var(--color-main);
 }
 
 .team::before,
@@ -136,7 +146,7 @@ main ul:last-child .team{
     content: "";
     height: 110%;
     position: absolute;
-    background-color: var(--color-main);
+    background-color: var(--team-theme ,var(--color-main));
    transform: skew(-45deg);
 }
 
@@ -149,6 +159,7 @@ main ul:last-child .team{
 .team img{
     z-index: 1;
 }
+
 .team::after{
     width: .4rem;
     left: 4.5rem;
@@ -157,15 +168,22 @@ main ul:last-child .team{
 
 #bracket-right .team::before{
     right: -3rem;
+    transform: skew(45deg);
 }
 
 #bracket-right .team::after{
     right: 4.5rem;
+    transform: skew(45deg);
 }
 
 .team span{
-    background-color: var(--color-bg);
     padding: .2rem 0;
     z-index: 1000;
-    width: 100%;
+}
+
+.c-blur{
+    width: 12vw;
+    height: 12vw;
+    filter: blur(500px);
+    opacity: .2;
 }
