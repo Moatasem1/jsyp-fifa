@@ -35,7 +35,7 @@
 
 /* ----------------------- start bracket  -----------------------*/
 
-.page-content{
+body{
     height: 100vh;
 }
 
@@ -44,7 +44,7 @@
 }
 
 .my-container{
-    width: 2300px;
+    width: 2600px;
     padding-inline: 2rem;
     margin-left: auto;
     margin-right: auto;
@@ -71,7 +71,7 @@
 .pair{
     border: 1px solid var(--color-main);
     border-left: transparent;
-    width: 16rem;
+    width: 18rem;
 }
 
 main ul:nth-child(1) .pair{
@@ -115,7 +115,7 @@ main ul:nth-child(3) .pair{
 /* team node */
 
 .team{
-    width: 12rem;
+    width: 16rem;
 }
 
 .team__img{

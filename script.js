@@ -9,7 +9,24 @@ document.addEventListener("DOMContentLoaded", async (event) => {
     let bracket = new Bracket(document.querySelector("#bracket-container"), teams, matches);
 
     bracket.renderBracket();
+
+    adjustZoom();
+
+    window.addEventListener('resize', adjustZoom);
+
 });
+
+function adjustZoom() {
+    const referenceWidth = 1280; // The width where you want zoom: 0.42 to work perfectly
+    const desiredZoom = 0.42; // Zoom level at the reference width
+    const viewportWidth = window.innerWidth;
+
+    // Calculate the new zoom factor
+    const newZoom = (viewportWidth / referenceWidth) * desiredZoom;
+
+    // Apply the new zoom/scale
+    document.querySelector('.page-content').style.zoom = `${newZoom}`;
+}
 
 async function fetchTeams() {
     let response = await fetch("./teams.json");
@@ -217,8 +234,16 @@ class Bracket {
 
         // Create the span element for the team name
         const teamNameSpan = document.createElement("span");
-        teamNameSpan.classList.add("team__name", "text-uppercase", "fw-semibold", "w-100", "bg-white", "text-dark");
-        teamNameSpan.textContent = teamData.name; // Use teamData for the team name
+        teamNameSpan.classList.add("team__name", "text-capitalize", "fw-semibold", "w-100", "bg-white", "text-dark");
+
+        let teamsNames = teamData.name.split(" ");
+        let characterCounter = 0;
+        for (let teamName of teamsNames) {
+            if (characterCounter + teamName.length + 1 >= 27)
+                break;
+            teamNameSpan.textContent += teamName + " ";
+            characterCounter += teamName.length + 1;//1 for space
+        }
 
         //set theme color
         teamDiv.style.setProperty("--team-theme", teamData.theme);
