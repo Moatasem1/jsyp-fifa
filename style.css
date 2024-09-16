@@ -1,112 +1,140 @@
-:root{
+:root {
     --color-main: #cf321d;
     --color-bg: #1c1920;
     --color-text: white;
     --color-sub-text: gray;
 }
 
-.text-main{
+.text-main {
     color: var(--color-text);
 }
 
-.text-sub{
+.text-sub {
     color: var(--color-sub-text);
 }
 
-.text-theme{
+.text-theme {
     color: var(--color-main);
 }
 
-.text-dark{
+.text-dark {
     color: var(--color-bg);
 }
 
-.bg-main{
+.bg-main {
     background-color: var(--color-main);
 }
 
-.bg-background{
+.bg-background {
     background-color: var(--color-bg);
 }
 
-.translate-middle-ny{
+.translate-middle-ny {
     transform: translateY(50%);
 }
 
-/* ----------------------- start bracket  -----------------------*/
+/* header */
 
-body{
-    height: 100vh;
+.title {
+    font-size: 2.8rem;
+    width: fit-content;
 }
 
-.title{
-    font-size: 5rem;
+.title::before {
+    content: "";
+    width: 100%;
+    height: 3px;
+    background-color: var(--color-main);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-radius: 100%;
 }
 
-.my-container{
-    width: 2600px;
-    padding-inline: 2rem;
-    margin-left: auto;
-    margin-right: auto;
+.icon-wrapper {
+    right: 3rem;
+    top: 1.5rem;
+    width: 2rem;
+    height: 2rem;
 }
 
-.background-video{
+.page-content {
+    border-inline: 2px solid var(--color-text);
+    min-height: 100vh;
+}
+
+video {
     object-fit: cover;
-    opacity: .1;
 }
 
+@media (min-width: 1900px) {
+    .container {
+        min-width: 1800px !important;
+        max-width: 1800px !important;
+    }
+}
+
+/* ----------------------- start bracket  -----------------------*/
 /* pairss in diff levels */
 
-#bracket-right{
+#bracket-container {
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+    scroll-behavior: smooth;
+    justify-content: safe center;
+}
+
+#bracket-right {
     position: relative;
     left: -.5rem;
     direction: rtl;
 }
 
-#bracket-left{
+#bracket-left {
     position: relative;
     right: -.5rem;
 }
 
-.pair{
+.pair {
     border: 1px solid var(--color-main);
     border-left: transparent;
     width: 18rem;
 }
 
-main ul:nth-child(1) .pair{
-    height: 8rem;
+#bracket-container ul:nth-child(1) .pair {
+    height: 6rem;
 }
 
-main ul:nth-child(1) .pair:not(:last-child){
-    margin-bottom: 8rem;
+#bracket-container ul:nth-child(1) .pair:not(:last-child) {
+    margin-bottom: 6rem;
 }
 
-main ul:nth-child(2) .pair{
-    height: 16rem;
+#bracket-container ul:nth-child(2) .pair {
+    height: 12rem;
     left: -1.5rem;
 }
 
-main ul:nth-child(2) .pair:not(:last-child){
-    margin-bottom: 16rem;
+#bracket-container ul:nth-child(2) .pair:not(:last-child) {
+    margin-bottom: 12rem;
 }
 
-main ul:nth-child(3) .pair{
-    height: 32rem;
+#bracket-container ul:nth-child(3) .pair {
+    height: 24rem;
     left: -3rem;
 }
 
 /* ========== right bracket ================ */
-#bracket-right .pair{
+#bracket-right .pair {
     border: 1px solid var(--color-main);
     border-right: transparent;
 }
 
-#bracket-right ul:nth-child(2) .pair{
+#bracket-right ul:nth-child(2) .pair {
     right: -1.5rem;
 }
 
-#bracket-right ul:nth-child(3) .pair{
+#bracket-right ul:nth-child(3) .pair {
     right: -3rem;
 }
 
@@ -114,27 +142,27 @@ main ul:nth-child(3) .pair{
 
 /* team node */
 
-.team{
+.team {
     width: 16rem;
 }
 
-.team__img{
+.team__img {
     width: 1.875rem;
 }
 
 /* team root node */
 
-#bracket-left > .team:last-child{
+#bracket-left>.team:last-child {
     left: -4.5rem;
 }
 
 /* ========== right bracket ================ */
-#bracket-right > .team:last-child{
+#bracket-right>.team:last-child {
     right: -4.5rem;
 }
 
 /* team rules */
-.team{
+.team {
     background-color: var(--color-bg);
     color: white;
     overflow: hidden;
@@ -142,48 +170,41 @@ main ul:nth-child(3) .pair{
 }
 
 .team::before,
-.team::after{
+.team::after {
     content: "";
     height: 110%;
     position: absolute;
-    background-color: var(--team-theme ,var(--color-main));
-   transform: skew(-45deg);
+    background-color: var(--team-theme, var(--color-main));
+    transform: skew(-45deg);
 }
 
-.team::before{
+.team::before {
     width: 5rem;
     left: -3rem;
     z-index: 0;
 }
 
-.team img{
+.team img {
     z-index: 1;
 }
 
-.team::after{
+.team::after {
     width: .4rem;
     left: 4.5rem;
     z-index: 0;
 }
 
-#bracket-right .team::before{
+#bracket-right .team::before {
     right: -3rem;
     transform: skew(45deg);
 }
 
-#bracket-right .team::after{
+#bracket-right .team::after {
     right: 4.5rem;
     transform: skew(45deg);
 }
 
-.team span{
+.team span {
     padding: .2rem 0;
     z-index: 1000;
-}
-
-.c-blur{
-    width: 12vw;
-    height: 12vw;
-    filter: blur(500px);
-    opacity: .2;
 }

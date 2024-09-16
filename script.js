@@ -10,22 +10,85 @@ document.addEventListener("DOMContentLoaded", async (event) => {
 
     bracket.renderBracket();
 
-    adjustZoom();
-
-    window.addEventListener('resize', adjustZoom);
-
+    enableScroll();
+    handelResize();
 });
 
-function adjustZoom() {
-    const referenceWidth = 1280; // The width where you want zoom: 0.42 to work perfectly
-    const desiredZoom = 0.42; // Zoom level at the reference width
-    const viewportWidth = window.innerWidth;
+function handelResize() {
+    let resizeBtn = document.getElementById("resize-btn");
+    adjustZoom();
+    resizeBtn.addEventListener("click", (event) => {
+        let isFull = resizeBtn.getAttribute("is-full");
+        if (isFull == 'false') {
+            adjustZoom();
+            resizeBtn.querySelector("i").classList.remove("fa-down-left-and-up-right-to-center");
+            resizeBtn.querySelector("i").classList.add("fa-up-right-and-down-left-from-center");
+        }
+        else {
+            adjustZoom(0);
+            resizeBtn.querySelector("i").classList.add("fa-down-left-and-up-right-to-center");
+            resizeBtn.querySelector("i").classList.remove("fa-up-right-and-down-left-from-center");
+        }
 
-    // Calculate the new zoom factor
-    const newZoom = (viewportWidth / referenceWidth) * desiredZoom;
+        resizeBtn.setAttribute("is-full", (isFull === "false") ? "true" : "false");
+    });
+}
 
-    // Apply the new zoom/scale
-    document.querySelector('.page-content').style.zoom = `${newZoom}`;
+function enableScroll() {
+    const container = document.querySelector('#bracket-container');
+
+    let isDragging = false;
+    let startX;
+    let scrollLeft;
+    let scrollSpeed = 1.5;
+
+    container.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.pageX - container.offsetLeft;//mouse poistion relative to container
+        scrollLeft = container.scrollLeft;
+        container.style.cursor = 'grabbing';
+    });
+
+    container.addEventListener('mouseleave', () => {
+        isDragging = false;
+        container.style.cursor = 'grab';
+    });
+
+    container.addEventListener('mouseup', () => {
+        isDragging = false;
+        container.style.cursor = 'grab';
+    });
+
+    container.addEventListener('mousemove', (e) => {
+        e.preventDefault();
+        if (!isDragging) return;
+        console.log("hi");
+        const x = e.pageX - container.offsetLeft;
+        const walk = (x - startX) * scrollSpeed;
+        container.scrollLeft = scrollLeft - walk;
+    });
+}
+
+/**
+ * 
+ * @param {number} desiredZoom  Zoom level at the reference width
+ */
+function adjustZoom(desiredZoom = 0.56) {
+    const referenceWidth = 1400; // The width where zoom: 0.42 works perfectly
+    const container = document.querySelector("#bracket-container");
+
+    if (container) {
+        const viewportWidth = container.offsetWidth;
+
+        // Calculate the new zoom factor
+        const newZoom = (viewportWidth / referenceWidth) * desiredZoom;
+
+        // Apply the new zoom to the container's child elements
+        const children = container.children;
+        for (let i = 0; i < children.length; i++) {
+            children[i].style.zoom = `${newZoom}`;
+        }
+    }
 }
 
 async function fetchTeams() {

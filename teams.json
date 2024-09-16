@@ -13,6 +13,6 @@
     { "id": 12, "name": "Applied Science Private University", "image": "./images/teams-logos/asu.png", "theme": "#0c0c0c" },
     { "id": 13, "name": "University of Jordan", "image": "./images/teams-logos/ju.png", "theme": "#00b46a" },
     { "id": 14, "name": "Al-Hussein Bin Talal University", "image": "./images/teams-logos/AHBT.png", "theme": "#d4a81e" },
-    { "id": 15, "name": "Jordan University of Science and Technology", "image": "./images/teams-logos/ju.png", "theme": "#2980b9" },
+    { "id": 15, "name": "Jordan University of Science and Technology", "image": "./images/teams-logos/JUST.png", "theme": "#2980b9" },
     { "id": 16, "name": "Yarmouk University", "image": "./images/teams-logos/Yarmouk.png", "theme": "#87de5b" }
 ]

@@ -23,36 +23,45 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
 
-  <body
-    class="bg-background text-main d-flex flex-column justify-content-center"
-  >
-    <div class="page-content my-container rounded bg-background">
-      <header class="pt-5 text-center">
-        <h1 class="title text-capitalize fw-bold w-100 mb-0">
-          <span class="text-theme">FIFA</span> tournament
+  <body class="text-main">
+    <div class="page-content bg-background container py-5 position-relative">
+      <header>
+        <h1
+          class="title position-relative mx-auto p-3 text-capitalize fw-bold text-center"
+        >
+          <span class="text-uppercase text-theme">fifa</span> tournament
         </h1>
       </header>
-      <main class="bracket pb-5 position-relative">
-        <div
-          class="c-blur position-absolute bg-main rounded-circule z-0 top-50 start-50 translate-middle"
-        ></div>
+      <main class="position-relative">
         <section
           id="bracket-container"
-          class="d-flex align-items-center justify-content-center"
+          class="d-flex align-items-center pt-5 mt-5 rounded"
         ></section>
+        <div
+          is-full="true"
+          id="resize-btn"
+          role="button"
+          class="icon-wrapper rounded-pill position-absolute bg-main d-flex align-items-center justify-content-center"
+        >
+          <i
+            class="fa-solid fa-up-right-and-down-left-from-center text-main fs-6"
+          ></i>
+        </div>
       </main>
-      <video
-        class="background-video w-100 h-100 position-absolute top-0 start-0 z-n1"
-        loop
-        autoplay
-        muted
-        src="./images/video.mp4"
-      ></video>
     </div>
-    <footer>
-      <!-- place footer here -->
-    </footer>
-    <script src="./script.js"></script>
+    <video
+      autoplay
+      muted
+      loop
+      src="./images/video.mp4"
+      type="video/mp4"
+      class="position-fixed top-0 start-0 h-100 w-100 z-n1"
+    ></video>
+    <script src="./script.js" defer></script>
+    <script
+      src="https://kit.fontawesome.com/6c455eb206.js"
+      crossorigin="anonymous"
+    ></script>
     <!-- Bootstrap JavaScript Libraries -->
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
