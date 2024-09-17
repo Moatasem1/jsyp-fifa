@@ -6,9 +6,34 @@ document.addEventListener("DOMContentLoaded", async (event) => {
     console.log(teams);
     console.log(matches);
 
-    let bracket = new Bracket(document.querySelector("#bracket-container"), teams, matches);
+    let bracket = new Bracket(document.querySelector("#bracket-container"), teams);
 
     bracket.renderBracket();
+    bracket.setMatchTeams(1, 1, 2);
+    bracket.setMatchTeams(2, 3, 4);
+    bracket.setMatchTeams(3, 5, 6);
+    bracket.setMatchTeams(4, 7, 8);
+    bracket.setMatchTeams(5, 9, 10);
+    bracket.setMatchTeams(6, 11, 12);
+    bracket.setMatchTeams(7, 13, 14);
+    bracket.setMatchTeams(8, 15, 16);
+
+    bracket.setWinner(1, 1, 1);
+    bracket.setWinner(1, 2, 3);
+    bracket.setWinner(1, 3, 6);
+    bracket.setWinner(1, 4, 8);
+    bracket.setWinner(1, 5, 9);
+    bracket.setWinner(1, 6, 12);
+    bracket.setWinner(1, 7, 14);
+    bracket.setWinner(1, 8, 16);
+
+    bracket.setWinner(2, 1, 3);
+    bracket.setWinner(2, 2, 6);
+    bracket.setWinner(2, 3, 9);
+    bracket.setWinner(2, 4, 14);
+
+    bracket.setWinner(3, 1, 6);
+    bracket.setWinner(3, 2, 9);
 
     enableScroll();
     handelResize();
@@ -73,7 +98,7 @@ function enableScroll() {
  * 
  * @param {number} desiredZoom  Zoom level at the reference width
  */
-function adjustZoom(desiredZoom = 0.56) {
+function adjustZoom(desiredZoom = 0.54) {
     const referenceWidth = 1400; // The width where zoom: 0.42 works perfectly
     const container = document.querySelector("#bracket-container");
 
@@ -102,6 +127,8 @@ async function fetchMatches() {
 
     return await response.json();
 }
+
+
 class Bracket {
     /**
      * @typedef {object[]} teams
@@ -146,32 +173,32 @@ class Bracket {
         this.#matches = matches;
     }
 
-    //
     renderBracket() {
         this.#layoutContainer.mainContainer.innerHTML = '';
 
-        this.#layoutContainer.leftSideBracketContainer = this.#getBracketSide("bracket-left");
-        this.#layoutContainer.rightSideBracketContainer = this.#getBracketSide("bracket-right");
+        this.#layoutContainer.leftSideBracketContainer = this.#getBracketSideAsHTMLElement("bracket-left");
+        this.#layoutContainer.rightSideBracketContainer = this.#getBracketSideAsHTMLElement("bracket-right");
 
         this.#layoutContainer.mainContainer.append(this.#layoutContainer.leftSideBracketContainer);
         this.#layoutContainer.mainContainer.append(this.#getCupImageAsHTMLElement());
         this.#layoutContainer.mainContainer.append(this.#layoutContainer.rightSideBracketContainer);
 
-        //values just for one side
-        let noOfMatches = this.#teams.length - 1;
+        // //values just for one side
+        // let noOfMatches = this.#teams.length - 1;
 
         if (!this.#matches.length)
             this.#fillMatchesWithDefaultValue();
 
         let noOfRounds = Math.log2(this.#teams.length);
+
         //append round
         let i, matchesAtRoundI;
         for (i = 1; i < noOfRounds; ++i) {
             matchesAtRoundI = this.#matches.filter(match => match.round === i);
 
             //matchesAtRoundI will contain all matches in both side so we need to divid them
-            this.#layoutContainer.leftSideBracketContainer.append(this.#getRound(matchesAtRoundI.slice(0, matchesAtRoundI.length / 2)));
-            this.#layoutContainer.rightSideBracketContainer.append(this.#getRound(matchesAtRoundI.slice(matchesAtRoundI.length / 2)));
+            this.#layoutContainer.leftSideBracketContainer.append(this.#getRoundAsHTMLElement(matchesAtRoundI.slice(0, matchesAtRoundI.length / 2)));
+            this.#layoutContainer.rightSideBracketContainer.append(this.#getRoundAsHTMLElement(matchesAtRoundI.slice(matchesAtRoundI.length / 2)));
         }
 
         //add final match
@@ -180,27 +207,36 @@ class Bracket {
         let team1Data = this.#teams.find(team => team.id === matchesAtRoundI[0].team1_id);
         let team2Data = this.#teams.find(team => team.id === matchesAtRoundI[0].team2_id);
 
+        let leftFinalRound = this.#getRoundAsHTMLElementT(i);
+        let rightFinalRound = this.#getRoundAsHTMLElementT(i);
 
-        if (!team1Data || !team2Data) return;;
+        if (team1Data)
+            leftFinalRound.append(this.#getTeamNodeAsHTMLElement(team1Data, "normal"));
+        if (team2Data)
+            rightFinalRound.append(this.#getTeamNodeAsHTMLElement(team2Data, "normal"));
 
-        this.#layoutContainer.leftSideBracketContainer.append(this.#getTeamNodeAsHTMLElement(team1Data, "normal"));
-        this.#layoutContainer.rightSideBracketContainer.append(this.#getTeamNodeAsHTMLElement(team2Data, "normal"));
+        this.#layoutContainer.leftSideBracketContainer.append(leftFinalRound);
+        this.#layoutContainer.rightSideBracketContainer.append(rightFinalRound);
     }
 
     #fillMatchesWithDefaultValue() {
 
         let noOfRounds = Math.log2(this.#teams.length);
-        let teamsNumberInRound = this.#teams.length / 2; //for one side
+        let matchesNumberInRound = this.#teams.length / 2; //initially
 
         //fill matches with all roundes and matches
         for (let i = 1; i <= noOfRounds; ++i) {
-            for (let f = 1; f <= teamsNumberInRound * 2; ++f)//generate for both side
+            for (let f = 1; f <= matchesNumberInRound; ++f)//generate for both side
                 this.#matches.push({ round: i, match: f, team1_id: null, team2_id: null, winner_id: null });
 
-            teamsNumberInRound /= 2;
+            matchesNumberInRound /= 2;
         }
     }
 
+    /**
+     * 
+     * @returns {HTMLElement}
+     */
     #getCupImageAsHTMLElement() {
         const cupImg = document.createElement("img");
 
@@ -212,11 +248,11 @@ class Bracket {
     }
 
     /**
-     * 
-     * @param {string} id element id
+     * get empty braket sid div
+     * @param {string} dir direction can be left or right
      * @returns {HTMLElement}
      */
-    #getBracketSide(id) {
+    #getBracketSideAsHTMLElement(id) {
         let sideDiv = document.createElement("section");
         sideDiv.classList.add("mt-5", "py-5", "d-flex", "align-items-center");
 
@@ -236,16 +272,24 @@ class Bracket {
      * @param {number|null} roundMatchesData.winner_id
      * @returns {HTMLElement}
      */
-    #getRound(roundMatchesData) {
-        const roundUl = document.createElement("ul");
+    #getRoundAsHTMLElement(roundMatchesData) {
 
-        roundUl.classList.add("round", "list-unstyled", "p-0", "mb-0");
+        let roundUl = this.#getRoundAsHTMLElementT(roundMatchesData[0].round);
 
         roundMatchesData.forEach(match => {
             let team1Data = (match.team1_id) ? this.#teams.find(team => team.id === match.team1_id) : null;
             let team2Data = (match.team2_id) ? this.#teams.find(team => team.id === match.team2_id) : null;
-            roundUl.append(this.#getPairAsHTMLElement(team1Data, team2Data));
+            roundUl.append(this.#getPairAsHTMLElement(match.match, team1Data, team2Data));
         });
+
+        return roundUl;
+    }
+
+    #getRoundAsHTMLElementT(roundNumber) {
+        const roundUl = document.createElement("ul");
+
+        roundUl.classList.add("round", "list-unstyled", "p-0", "mb-0");
+        roundUl.setAttribute("round", roundNumber);
 
         return roundUl;
     }
@@ -256,10 +300,12 @@ class Bracket {
     * @property {string} name
     * @property {string} image url of the image
     * @property {string} theme hexa color start with #
+    * @param {number} matchNumber
     */
-    #getPairAsHTMLElement(team1Data, team2Data) {
+    #getPairAsHTMLElement(matchNumber, team1Data, team2Data) {
         const pairDiv = document.createElement("div");
-        pairDiv.classList.add("pair", "position-relative", "rounded");
+        pairDiv.classList.add("pair", "position-relative");
+        pairDiv.setAttribute("match", matchNumber);
 
         if (team1Data)
             pairDiv.appendChild(this.#getTeamNodeAsHTMLElement(team1Data, "top"));
@@ -278,16 +324,20 @@ class Bracket {
     * @param {string} type type can be normal top bottom
     */
     #getTeamNodeAsHTMLElement(teamData, type) {
+
+        if (!teamData) return;
+
         // Create a div element for the team container
         const teamDiv = document.createElement("div");
         teamDiv.classList.add("team", "z-1", "d-flex", "align-items-center", "gap-3", "bg-white", "rounded", "p-2", "position-relative");
+        teamDiv.id = teamData.id;
+
         if (type.toLowerCase() == 'top')
             teamDiv.classList.add("top-0", "translate-middle-y");
         else if (type.toLowerCase() == "bottom") {
             teamDiv.classList.remove("position-relative");
             teamDiv.classList.add("bottom-0", "translate-middle-ny", "position-absolute");
         }
-
 
         // Create the img element for the team logo
         const teamImg = document.createElement("img");
@@ -317,5 +367,106 @@ class Bracket {
 
         // Return the complete team div element
         return teamDiv;
+    }
+
+    /**
+   * @param {object} match
+   * @param {number} match.round as ex if we have 4 teams we will have 2 round
+   * @param {number} match.match match number in the round 
+   * @param {number} match.team1_id 
+   * @param {number} match.team2_id 
+   */
+    #setMatchTeamsHelper(match) {
+        const team1Data = this.#teams.find(team => team.id == match.team1_id);
+        const team2Data = this.#teams.find(team => team.id == match.team2_id);
+
+        //update matches at round match.round
+        for (let matchItem of this.#matches) {
+            if (matchItem.round === match.round && matchItem.match == match.match) {
+                matchItem.team1_id = match.team1_id;
+                matchItem.team2_id = match.team2_id;
+            }
+        }
+
+        if (this.#isFinalRound(match.round)) {
+            this.#setFinalMatch(team1Data, "left");
+            this.#setFinalMatch(team2Data, "right");
+            return;
+        }
+
+        let matchContainer = this.#layoutContainer.mainContainer.querySelector(`.round[round="${match.round}"] .pair[match="${match.match}"]`);
+        matchContainer.innerHTML = "";
+
+        if (team1Data)
+            matchContainer.appendChild(this.#getTeamNodeAsHTMLElement(team1Data, "top"));
+        if (team2Data)
+            matchContainer.appendChild(this.#getTeamNodeAsHTMLElement(team2Data, "bottom"));
+    }
+
+    #setFinalMatch(teamData, side = 'left') {
+        if (side == "left") {
+            let leftFinalMatchContainer =
+                this.#layoutContainer.leftSideBracketContainer.querySelector(`.round[round="${this.#getNumberOfRounds()}"]`);
+            leftFinalMatchContainer.innerHTML = "";
+            if (teamData)
+                leftFinalMatchContainer.appendChild(this.#getTeamNodeAsHTMLElement(teamData, "normal"));
+        }
+        else {
+            let rightFinalMatchContainer =
+                this.#layoutContainer.rightSideBracketContainer.querySelector(`.round[round="${this.#getNumberOfRounds()}"]`);
+            rightFinalMatchContainer.innerHTML = "";
+            if (teamData)
+                rightFinalMatchContainer.appendChild(this.#getTeamNodeAsHTMLElement(teamData, "normal"));
+        }
+
+    }
+
+    /**
+     * know if your round number is the final round or not
+     * @param {number} roundNumber 
+     * @returns {boolean}
+     */
+    #isFinalRound(roundNumber) {
+        return this.#getNumberOfRounds() === roundNumber;
+    }
+
+    #getNumberOfRounds() {
+        return Math.log2(this.#teams.length);
+    }
+
+    setMatchTeams(matchNumber, team1Id, team2Id) {
+        this.#setMatchTeamsHelper({ round: 1, match: matchNumber, team1_id: team1Id, team2_id: team2Id });
+    }
+
+    setWinner(roundNumber, matchNumber, winnerTeamId) {
+        for (let matchItem of this.#matches) {
+            if (matchItem.round === roundNumber && matchItem.match === matchNumber)
+                matchItem.winner_id = winnerTeamId;
+
+
+            else if (matchItem.round === roundNumber + 1 && matchItem.match === Math.ceil(matchNumber / 2))
+                if (matchItem.match % 2 == 1)
+                    matchItem.team1_id = winnerTeamId;
+                else
+                    matchItem.team2_id = winnerTeamId;
+        }
+
+        const winnerTeamData = this.#getTeamDataById(winnerTeamId);
+
+        if (this.#isFinalRound(roundNumber + 1))
+            (matchNumber % 2 == 1) ? this.#setFinalMatch(winnerTeamData, "left") :
+                this.#setFinalMatch(winnerTeamData, "right");
+        else {
+            let matchContainer = this.#layoutContainer.mainContainer.querySelector(`.round[round="${roundNumber + 1}"] .pair[match="${Math.ceil(matchNumber / 2)}"]`);
+
+            if (matchNumber % 2 == 1)
+                matchContainer.appendChild(this.#getTeamNodeAsHTMLElement(winnerTeamData, "top"));
+            else
+                matchContainer.appendChild(this.#getTeamNodeAsHTMLElement(winnerTeamData, "bottom"));
+        }
+    }
+
+    #getTeamDataById(teamId) {
+        return this.#teams.find(team => team.id === teamId);
     }
 };

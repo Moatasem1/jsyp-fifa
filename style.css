@@ -89,11 +89,13 @@ video {
     position: relative;
     left: -.5rem;
     direction: rtl;
+    margin-left: auto;
 }
 
 #bracket-left {
     position: relative;
     right: -.5rem;
+    margin-right: auto;
 }
 
 .pair {
@@ -124,6 +126,10 @@ video {
     left: -3rem;
 }
 
+#bracket-container ul:nth-child(4) .team {
+    left: -4.5rem;
+}
+
 /* ========== right bracket ================ */
 #bracket-right .pair {
     border: 1px solid var(--color-main);
@@ -136,6 +142,10 @@ video {
 
 #bracket-right ul:nth-child(3) .pair {
     right: -3rem;
+}
+
+#bracket-right ul:nth-child(4) .team {
+    right: -4.5rem;
 }
 
 /* ========== right bracket ================ */
