@@ -156,6 +156,10 @@ video {
     width: 16rem;
 }
 
+ul {
+    min-width: 16rem;
+}
+
 .team__img {
     width: 1.875rem;
 }
@@ -177,6 +181,15 @@ video {
     color: white;
     overflow: hidden;
     border: 1px solid var(--color-main);
+    transition: 1s;
+}
+
+#bracket-left .team {
+    left: 0;
+}
+
+#bracket-right .team {
+    right: 0;
 }
 
 .team::before,
@@ -217,4 +230,27 @@ video {
 .team span {
     padding: .2rem 0;
     z-index: 1000;
+}
+
+/* =========================== win animation =============================== */
+
+/* final round doesn't have pair so it won't affect it */
+#bracket-left ul .pair .team:last-child.move,
+#bracket-right ul .pair .team:last-child.move {
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+/* #bracket-left ul .pair .team:last-child.move,
+#bracket-right ul .pair .team:last-child.move {
+    bottom: 50% !important;
+    transform: translateY(50%) !important;
+} */
+
+#bracket-left ul .pair .team.move {
+    left: calc(100% - 1.5rem);
+}
+
+#bracket-right ul .pair .team.move {
+    right: calc(100% - 1.5rem);
 }

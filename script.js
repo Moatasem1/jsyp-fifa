@@ -18,22 +18,21 @@ document.addEventListener("DOMContentLoaded", async (event) => {
     bracket.setMatchTeams(7, 13, 14);
     bracket.setMatchTeams(8, 15, 16);
 
-    bracket.setWinner(1, 1, 1);
-    bracket.setWinner(1, 2, 3);
-    bracket.setWinner(1, 3, 6);
-    bracket.setWinner(1, 4, 8);
-    bracket.setWinner(1, 5, 9);
-    bracket.setWinner(1, 6, 12);
-    bracket.setWinner(1, 7, 14);
-    bracket.setWinner(1, 8, 16);
-
-    bracket.setWinner(2, 1, 3);
-    bracket.setWinner(2, 2, 6);
-    bracket.setWinner(2, 3, 9);
-    bracket.setWinner(2, 4, 14);
-
-    bracket.setWinner(3, 1, 6);
-    bracket.setWinner(3, 2, 9);
+    document.getElementById("test").addEventListener("click", event => {
+        bracket.setWinner(1, 1, 1);
+        // bracket.setWinner(1, 3, 6);
+        // bracket.setWinner(1, 4, 8);
+        // bracket.setWinner(1, 5, 9);
+        // bracket.setWinner(1, 6, 12);
+        // bracket.setWinner(1, 7, 14);
+        // bracket.setWinner(1, 8, 16);
+        // bracket.setWinner(2, 1, 3);
+        // bracket.setWinner(2, 2, 6);
+        // bracket.setWinner(2, 3, 9);
+        // bracket.setWinner(2, 4, 14);
+        // bracket.setWinner(3, 1, 6);
+        // bracket.setWinner(3, 2, 9);
+    });
 
     enableScroll();
     handelResize();
@@ -288,7 +287,7 @@ class Bracket {
     #getRoundAsHTMLElementT(roundNumber) {
         const roundUl = document.createElement("ul");
 
-        roundUl.classList.add("round", "list-unstyled", "p-0", "mb-0");
+        roundUl.classList.add("round", "list-unstyled", "p-0", "mb-0", "position-relative");
         roundUl.setAttribute("round", roundNumber);
 
         return roundUl;
@@ -329,13 +328,13 @@ class Bracket {
 
         // Create a div element for the team container
         const teamDiv = document.createElement("div");
-        teamDiv.classList.add("team", "z-1", "d-flex", "align-items-center", "gap-3", "bg-white", "rounded", "p-2", "position-relative");
+        teamDiv.classList.add("team", "z-1", "d-flex", "align-items-center", "gap-3", "bg-white", "rounded", "p-2", "position-absolute", "translate-middle-y");
         teamDiv.id = teamData.id;
 
         if (type.toLowerCase() == 'top')
             teamDiv.classList.add("top-0", "translate-middle-y");
         else if (type.toLowerCase() == "bottom") {
-            teamDiv.classList.remove("position-relative");
+            teamDiv.classList.remove("translate-middle-y");
             teamDiv.classList.add("bottom-0", "translate-middle-ny", "position-absolute");
         }
 
@@ -407,18 +406,22 @@ class Bracket {
         if (side == "left") {
             let leftFinalMatchContainer =
                 this.#layoutContainer.leftSideBracketContainer.querySelector(`.round[round="${this.#getNumberOfRounds()}"]`);
-            leftFinalMatchContainer.innerHTML = "";
-            if (teamData)
-                leftFinalMatchContainer.appendChild(this.#getTeamNodeAsHTMLElement(teamData, "normal"));
+            if (teamData) {
+                let winnerNode = this.#getTeamNodeAsHTMLElement(teamData, "normal");
+                leftFinalMatchContainer.appendChild(winnerNode);
+            }
         }
         else {
             let rightFinalMatchContainer =
                 this.#layoutContainer.rightSideBracketContainer.querySelector(`.round[round="${this.#getNumberOfRounds()}"]`);
-            rightFinalMatchContainer.innerHTML = "";
-            if (teamData)
-                rightFinalMatchContainer.appendChild(this.#getTeamNodeAsHTMLElement(teamData, "normal"));
+            if (teamData) {
+                let winnerNode = this.#getTeamNodeAsHTMLElement(teamData, "normal");
+                rightFinalMatchContainer.appendChild(winnerNode);
+            }
         }
 
+        winnerNode.offsetHeight;
+        winnerNode.classList.add("move");
     }
 
     /**
@@ -453,16 +456,22 @@ class Bracket {
 
         const winnerTeamData = this.#getTeamDataById(winnerTeamId);
 
-        if (this.#isFinalRound(roundNumber + 1))
+        if (this.#isFinalRound(roundNumber))
             (matchNumber % 2 == 1) ? this.#setFinalMatch(winnerTeamData, "left") :
                 this.#setFinalMatch(winnerTeamData, "right");
         else {
-            let matchContainer = this.#layoutContainer.mainContainer.querySelector(`.round[round="${roundNumber + 1}"] .pair[match="${Math.ceil(matchNumber / 2)}"]`);
+            let matchContainer = this.#layoutContainer.mainContainer.querySelector(`.round[round="${roundNumber}"] .pair[match="${matchNumber}"]`);
 
+            let winnerNode;
             if (matchNumber % 2 == 1)
-                matchContainer.appendChild(this.#getTeamNodeAsHTMLElement(winnerTeamData, "top"));
+                winnerNode = this.#getTeamNodeAsHTMLElement(winnerTeamData, "top");
             else
-                matchContainer.appendChild(this.#getTeamNodeAsHTMLElement(winnerTeamData, "bottom"));
+                winnerNode = this.#getTeamNodeAsHTMLElement(winnerTeamData, "bottom");
+
+            matchContainer.appendChild(winnerNode);
+
+            winnerNode.offsetHeight;
+            winnerNode.classList.add("move");
         }
     }
 
