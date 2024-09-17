@@ -6,17 +6,17 @@ document.addEventListener("DOMContentLoaded", async (event) => {
     console.log(teams);
     console.log(matches);
 
-    let bracket = new Bracket(document.querySelector("#bracket-container"), teams);
+    let bracket = new Bracket(document.querySelector("#bracket-container"), teams, matches);
 
     bracket.renderBracket();
-    bracket.setMatchTeams(1, 1, 2);
-    bracket.setMatchTeams(2, 3, 4);
-    bracket.setMatchTeams(3, 5, 6);
-    bracket.setMatchTeams(4, 7, 8);
-    bracket.setMatchTeams(5, 9, 10);
-    bracket.setMatchTeams(6, 11, 12);
-    bracket.setMatchTeams(7, 13, 14);
-    bracket.setMatchTeams(8, 15, 16);
+    // bracket.setMatchTeams(1, 1, 2);
+    // bracket.setMatchTeams(2, 3, 4);
+    // bracket.setMatchTeams(3, 5, 6);
+    // bracket.setMatchTeams(4, 7, 8);
+    // bracket.setMatchTeams(5, 9, 10);
+    // bracket.setMatchTeams(6, 11, 12);
+    // bracket.setMatchTeams(7, 13, 14);
+    // bracket.setMatchTeams(8, 15, 16);
 
     document.getElementById("test").addEventListener("click", event => {
         bracket.setWinner(1, 1, 1);
