@@ -181,7 +181,7 @@ ul {
     color: white;
     overflow: hidden;
     border: 1px solid var(--color-main);
-    transition: 1s;
+    transition: 1.5s;
 }
 
 #bracket-left .team {
@@ -235,17 +235,17 @@ ul {
 /* =========================== win animation =============================== */
 
 /* final round doesn't have pair so it won't affect it */
-#bracket-left ul .pair .team:last-child.move,
-#bracket-right ul .pair .team:last-child.move {
+#bracket-left ul .pair .team:last-child.top-0.move,
+#bracket-right ul .pair .team:last-child.top-0.move {
     top: 50% !important;
     transform: translateY(-50%) !important;
 }
 
-/* #bracket-left ul .pair .team:last-child.move,
-#bracket-right ul .pair .team:last-child.move {
+#bracket-left ul .pair .team:last-child.bottom-0.move,
+#bracket-right ul .pair .team:last-child.bottom-0.move {
     bottom: 50% !important;
     transform: translateY(50%) !important;
-} */
+}
 
 #bracket-left ul .pair .team.move {
     left: calc(100% - 1.5rem);
@@ -254,3 +254,40 @@ ul {
 #bracket-right ul .pair .team.move {
     right: calc(100% - 1.5rem);
 }
+
+
+/* @keyframes move-horizontal-left {
+    0% {
+        transform: translateX(0) !important;
+    }
+
+    100% {
+        left: calc(100% - 1.5rem);
+    }
+}
+
+@keyframes move-horizontal-right {
+    0% {}
+
+    100% {
+        right: calc(100% - 1.5rem);
+    }
+}
+
+@keyframes move-vertical-up {
+    0% {}
+
+    100% {
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+    }
+}
+
+@keyframes move-vertical-down {
+    0% {}
+
+    100% {
+        bottom: 50% !important;
+        transform: translateY(50%) !important;
+    }
+} */

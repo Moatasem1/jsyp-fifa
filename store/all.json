@@ -1,0 +1,213 @@
+{
+    "rounds": [
+      {
+        "matches": [
+          {
+            "match": 1,
+            "team1_id": -1,
+            "team2_id": -1,
+            "winner_id": -1
+          },
+          {
+            "match": 2,
+            "team1_id": -1,
+            "team2_id": -1,
+            "winner_id": -1
+          },
+          {
+            "match": 3,
+            "team1_id": -1,
+            "team2_id": -1,
+            "winner_id": -1
+          },
+          {
+            "match": 4,
+            "team1_id": -1,
+            "team2_id": -1,
+            "winner_id": -1
+          },
+          {
+            "match": 5,
+            "team1_id": -1,
+            "team2_id": -1,
+            "winner_id": -1
+          },
+          {
+            "match": 6,
+            "team1_id": -1,
+            "team2_id": -1,
+            "winner_id": -1
+          },
+          {
+            "match": 7,
+            "team1_id": -1,
+            "team2_id": -1,
+            "winner_id": -1
+          },
+          {
+            "match": 8,
+            "team1_id": -1,
+            "team2_id": -1,
+            "winner_id": -1
+          }
+        ],
+        "round": 1
+      },
+      {
+        "matches": [
+          {
+            "match": 1,
+            "team1_id": -1,
+            "team2_id": -1,
+            "winner_id": -1
+          },
+          {
+            "match": 2,
+            "team1_id": -1,
+            "team2_id": -1,
+            "winner_id": -1
+          },
+          {
+            "match": 3,
+            "team1_id": -1,
+            "team2_id": -1,
+            "winner_id": -1
+          },
+          {
+            "match": 4,
+            "team1_id": -1,
+            "team2_id": -1,
+            "winner_id": -1
+          }
+        ],
+        "round": 2
+      },
+      {
+        "matches": [
+          {
+            "match": 1,
+            "team1_id": -1,
+            "team2_id": -1,
+            "winner_id": -1
+          },
+          {
+            "match": 2,
+            "team1_id": -1,
+            "team2_id": -1,
+            "winner_id": -1
+          }
+        ],
+        "round": 3
+      },
+      {
+        "matches": [
+          {
+            "match": 1,
+            "team1_id": -1,
+            "team2_id": -1,
+            "winner_id": -1
+          }
+        ],
+        "round": 4
+      }
+    ],
+    "teams": [
+      {
+        "id": 1,
+        "image": "GJU.png",
+        "name": "German Jordanian ",
+        "theme": "#2685d9"
+      },
+      {
+        "id": 2,
+        "image": "Zaytoonah.png",
+        "name": "Al-Zaytoonah University of Jordan",
+        "theme": "#196b0f"
+      },
+      {
+        "id": 3,
+        "image": "hu.png",
+        "name": "Hashemite University",
+        "theme": "#e90505"
+      },
+      {
+        "id": 4,
+        "image": "zarqa.png",
+        "name": "Zarqa University",
+        "theme": "#002248"
+      },
+      {
+        "id": 5,
+        "image": "ahliyah.png",
+        "name": "Al-Ahliyya Amman University",
+        "theme": "#01032a"
+      },
+      {
+        "id": 6,
+        "image": "petra.png",
+        "name": "University of Petra",
+        "theme": "#901d23"
+      },
+      {
+        "id": 7,
+        "image": "BAU.png",
+        "name": "Al-Balqa' Applied University - Center",
+        "theme": "#109033"
+      },
+      {
+        "id": 8,
+        "image": "phu.png",
+        "name": "Philadelphia University",
+        "theme": "#003366"
+      },
+      {
+        "id": 9,
+        "image": "HTU.png",
+        "name": "Al Hussein Technical University",
+        "theme": "#da373f"
+      },
+      {
+        "id": 10,
+        "image": "albayt.png",
+        "name": "Al al-Bayt University",
+        "theme": "#00acbb"
+      },
+      {
+        "id": 11,
+        "image": "ttu.png",
+        "name": "Tafila Technical University",
+        "theme": "#f6a60e"
+      },
+      {
+        "id": 12,
+        "image": "asu.png",
+        "name": "Applied Science Private University",
+        "theme": "#0c0c0c"
+      },
+      {
+        "id": 13,
+        "image": "ju.png",
+        "name": "University of Jordan",
+        "theme": "#00b46a"
+      },
+      {
+        "id": 14,
+        "image": "AHBT.png",
+        "name": "Al-Hussein Bin Talal University",
+        "theme": "#d4a81e"
+      },
+      {
+        "id": 15,
+        "image": "JUST.png",
+        "name": "Jordan University of Science and Technology",
+        "theme": "#2980b9"
+      },
+      {
+        "id": 16,
+        "image": "Yarmouk.png",
+        "name": "Yarmouk University",
+        "theme": "#87de5b"
+      }
+    ]
+  }
+  
