@@ -150,6 +150,7 @@ function launchConfetti() {
     });
 }
 
+
 class Bracket {
     /**
      * @typedef {object[]} teams
