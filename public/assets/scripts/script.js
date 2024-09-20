@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
 
     const teams = await getDataFromPath("teams");
     const rounds = await getDataFromPath("rounds");
-    console.log(rounds);
+
 
     let bracket = new Bracket(document.querySelector("#bracket-container"), teams, rounds);
     bracket.renderBracket();
@@ -36,8 +36,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
         for (let i = 0; i < newRounds.length; ++i) {
             for (let j = 0; j < newRounds[i].matches.length; ++j) {
                 if (newRounds[i].matches[j].winner_id != rounds[i].matches[j].winner_id) {
-                    console.log("it's dif");
-                    bracket.setWinner(newRounds[i].round, newRounds[i].matches[j].match, newRounds[i].matches[j].winner_id);
+                    bracket.updateWinner(newRounds[i].round, newRounds[i].matches[j].match, newRounds[i].matches[j].winner_id);
                     rounds[i].matches[j].winner_id = newRounds[i].matches[j].winner_id;
                 }
             }
@@ -427,18 +426,28 @@ class Bracket {
         this.#setMatchTeamsHelper({ round: 1, match: matchNumber, team1_id: team1Id, team2_id: team2Id });
     }
 
-    setWinner(roundNumber, matchNumber, winnerTeamId) {
-        for (let round of this.#rounds) {
-            if (round.round === roundNumber && round.match === matchNumber)
-                round.winner_id = winnerTeamId;
+    updateWinner(roundNumber, matchNumber, winnerTeamId) {
+        // for (let round of this.#rounds) {
+        //     if (round.round === roundNumber && round.match === matchNumber)
+        //         round.winner_id = winnerTeamId;
 
 
-            else if (round.round === roundNumber + 1 && round.match === Math.ceil(matchNumber / 2))
-                if (round.match % 2 == 1)
-                    round.team1_id = winnerTeamId;
-                else
-                    round.team2_id = winnerTeamId;
-        }
+        //     else if (round.round === roundNumber + 1 && round.match === Math.ceil(matchNumber / 2))
+        //         if (round.match % 2 == 1)
+        //             round.team1_id = winnerTeamId;
+        //         else
+        //             round.team2_id = winnerTeamId;
+        // }
+
+        let matchContainer = this.#layoutContainer.mainContainer.querySelector(`.round[round="${roundNumber}"] .pair[match="${matchNumber}"]`);
+        const teams = matchContainer.querySelectorAll(".team");
+
+        if (teams.length > 2) teams[2].remove();
+
+        else if (roundNumber > 1)
+            matchContainer.innerHTML = '';
+
+        if (winnerTeamId == -1) return;
 
         const winnerTeamEl = document.querySelector(`.round[round='${1}'] .team[id='${winnerTeamId}']`);
 
@@ -448,7 +457,6 @@ class Bracket {
         //fix replace 1 with correct condition
         winnerTeamElCopy.classList.add((1) ? "top-0" : "bottom-0");
 
-        let matchContainer = this.#layoutContainer.mainContainer.querySelector(`.round[round="${roundNumber}"] .pair[match="${matchNumber}"]`);
         matchContainer.appendChild(winnerTeamElCopy);
 
         winnerTeamElCopy.offsetHeight;
