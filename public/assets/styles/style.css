@@ -81,7 +81,7 @@ video {
 #bracket-right .round::after {
     content: attr(round);
     position: absolute;
-    top: -3rem;
+    top: -5rem;
 }
 
 #bracket-left .round::after {
