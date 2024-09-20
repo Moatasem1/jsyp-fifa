@@ -10,32 +10,6 @@ document.addEventListener("DOMContentLoaded", async (event) => {
     let bracket = new Bracket(document.querySelector("#bracket-container"), teams, rounds);
     bracket.renderBracket();
 
-    // //set first round
-    // bracket.setMatchTeams(1, 1, 2);
-    // bracket.setMatchTeams(2, 3, 4);
-    // bracket.setMatchTeams(3, 5, 6);
-    // bracket.setMatchTeams(4, 7, 8);
-    // bracket.setMatchTeams(5, 9, 10);
-    // bracket.setMatchTeams(6, 11, 12);
-    // bracket.setMatchTeams(7, 13, 14);
-    // bracket.setMatchTeams(8, 15, 6);
-
-    // //set rounds winner
-    // bracket.setWinner(1, 1, 1);
-    // bracket.setWinner(1, 2, 4);
-    // bracket.setWinner(1, 3, 6);
-    // bracket.setWinner(1, 4, 7);
-    // bracket.setWinner(1, 5, 9);
-    // bracket.setWinner(1, 6, 12);
-    // bracket.setWinner(1, 7, 13);
-    // bracket.setWinner(1, 8, 15);
-    // bracket.setWinner(2, 1, 4);
-    // bracket.setWinner(2, 2, 6);
-    // bracket.setWinner(2, 3, 12);
-    // bracket.setWinner(2, 4, 13);
-    // bracket.setWinner(3, 1, 6);
-    // bracket.setWinner(3, 2, 13);
-
     const round1MatchesRef = ref(database, 'rounds/0/matches');
 
     onValue(round1MatchesRef, (snapshot) => {
@@ -258,7 +232,7 @@ class Bracket {
     #getCupImageAsHTMLElement() {
         const cupImg = document.createElement("img");
 
-        cupImg.src = "/assets/images/mario-cup.webp";
+        cupImg.src = "./assets/images/mario-cup.png";
         cupImg.classList.add("img-fluid", "z-1");
         cupImg.style.minWidth = '260px';
 
@@ -360,7 +334,7 @@ class Bracket {
         // Create the img element for the team logo
         const teamImg = document.createElement("img");
         teamImg.classList.add("team__img");
-        teamImg.src = '/assets/images/teams-logos/' + teamData.image;
+        teamImg.src = 'assets/images/teams-logos/' + teamData.image;
         teamImg.alt = "team logo";
 
         // Create the span element for the team name

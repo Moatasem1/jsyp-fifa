@@ -68,12 +68,11 @@ class RoundUi {
                         winnerBtns[1].checked = false;
                     else
                         winnerBtns[0].checked = false
+
                     this.#setWinner(Number(round.dataset.round), Number(match.dataset.match), Number(event.target.value));
-                    // this.#buttonOff(match);
                 }
                 else {
-                    //i think it's useless
-                    this.#setWinner(Number(round.dataset.round), Number(match.dataset.match), null);
+                    this.#setWinner(Number(round.dataset.round), Number(match.dataset.match), -1);
                 }
             }
         });
@@ -91,9 +90,11 @@ class RoundUi {
         match.winner_id = winnerId;
         updateDatabaseValue(`rounds/${roundNumber - 1}/matches/${matchNumber - 1}/winner_id`, winnerId);
 
-        if (roundNumber + 1 > this.#rounds.length) return;
+        if (roundNumber >= this.#rounds.length) return;
 
-        this.#updateTeamsAtMatch(roundNumber + 1, matchNumber, winnerId, matchNumber % 2 == 1 ? 1 : 2);
+        console.log(roundNumber + 1, Math.ceil(matchNumber / 2), winnerId, matchNumber % 2 == 1 ? 1 : 2);
+        this.#updateTeamsAtMatch(roundNumber + 1, Math.ceil(matchNumber / 2), winnerId, matchNumber % 2 == 1 ? 1 : 2);
+
         const matchAtNextRound = document.querySelector(`.round[data-round='${roundNumber + 1}'] .match-card[data-match='${Math.ceil(matchNumber / 2)}']`);
         const TeamsCardAtNextRoundAtMacthX = matchAtNextRound.querySelectorAll(".team-card");
         const winnerTeamCard = (matchNumber % 2 == 1 ? TeamsCardAtNextRoundAtMacthX[0] : TeamsCardAtNextRoundAtMacthX[1]);
@@ -242,7 +243,7 @@ class RoundUi {
 
         // Create row inside the accordion body
         const rowDiv = document.createElement('div');
-        rowDiv.classList.add('row', 'row-cols-3', 'gy-4');
+        rowDiv.classList.add('row', 'row-cols-1', 'row-cols-lg-3', 'gy-4');
 
         matches.forEach(match => {
             const matchCard = this.#getMatchUi(
@@ -274,13 +275,14 @@ class RoundUi {
         let newImage;
         if (teamCard.dataset.team != 'default') {
             const selectedTeamData = this.#getTeamDataById(teamCard.dataset.team);
-            newImage = selectedTeamData.image;
+            newImage = "teams-logos/";
+            newImage += selectedTeamData.image;
         }
         else {
-            newImage = "/assets/images/question-mark.png";
+            newImage = "question-mark.png";
         }
 
-        teamCard.querySelector("img").src = "/assets/images/teams-logos/" + newImage;
+        teamCard.querySelector("img").src = "../assets/images/" + newImage;
     }
 
     /**
@@ -388,7 +390,7 @@ class RoundUi {
         // Create the team logo image
         const img = document.createElement('img');
         img.width = 60;
-        img.src = `/assets/images/${(teamData) ? "teams-logos/" + teamData.image : 'question-mark.png'}`;
+        img.src = `../assets/images/${(teamData) ? "teams-logos/" + teamData.image : 'question-mark.png'}`;
         img.alt = teamData ? teamData.name : "default";
         img.className = 'img-fluid';
         teamCard.appendChild(img);
