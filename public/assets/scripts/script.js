@@ -141,6 +141,15 @@ function adjustZoom(desiredZoom = 0.54) {
     }
 }
 
+function launchConfetti() {
+    confetti({
+        particleCount: 150,
+        spread: 1000, // The spread of the confetti particles
+        origin: { y: 0.6 }, // The vertical launch position (0.6 = 60% from the top)
+        colors: ['#FF6347', '#32CD32', '#FFD700', '#1E90FF', '#FF69B4'], // Custom colors for confetti
+    });
+}
+
 class Bracket {
     /**
      * @typedef {object[]} teams
@@ -427,25 +436,28 @@ class Bracket {
     }
 
     updateWinner(roundNumber, matchNumber, winnerTeamId) {
-        // for (let round of this.#rounds) {
-        //     if (round.round === roundNumber && round.match === matchNumber)
-        //         round.winner_id = winnerTeamId;
-
-
-        //     else if (round.round === roundNumber + 1 && round.match === Math.ceil(matchNumber / 2))
-        //         if (round.match % 2 == 1)
-        //             round.team1_id = winnerTeamId;
-        //         else
-        //             round.team2_id = winnerTeamId;
-        // }
 
         let matchContainer = this.#layoutContainer.mainContainer.querySelector(`.round[round="${roundNumber}"] .pair[match="${matchNumber}"]`);
         const teams = matchContainer.querySelectorAll(".team");
 
         if (teams.length > 2) teams[2].remove();
+        else {
+            if (roundNumber > 1) matchContainer.innerHTML = '';
 
-        else if (roundNumber > 1)
-            matchContainer.innerHTML = '';
+            else if (roundNumber <= this.#rounds.length) {
+                let matchContainer = this.#layoutContainer.mainContainer.querySelector(`.round[round="${roundNumber + 1}"] .pair[match="${Math.ceil(matchNumber / 2)}"]`);
+                const teams = matchContainer.querySelectorAll(".team");
+
+                if (teams.length == 2) {
+                    if (matchNumber % 2 == 1 && teams[0])
+                        teams[0].remove();
+                    else if (teams[1])
+                        teams[1].remove();
+                }
+                else if (teams.length == 1 && teams[0])
+                    teams[0].remove();
+            }
+        }
 
         if (winnerTeamId == -1) return;
 
@@ -458,6 +470,8 @@ class Bracket {
         winnerTeamElCopy.classList.add((1) ? "top-0" : "bottom-0");
 
         matchContainer.appendChild(winnerTeamElCopy);
+
+        launchConfetti();
 
         winnerTeamElCopy.offsetHeight;
         winnerTeamElCopy.classList.add("move");

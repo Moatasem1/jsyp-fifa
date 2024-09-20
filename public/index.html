@@ -16,11 +16,13 @@
 </head>
 
 <body class="text-main">
-  <div class="page-content bg-background container py-5 position-relative">
-    <header>
-      <h1 class="title position-relative mx-auto p-3 text-capitalize fw-bold text-center">
+  <div class="page-content container py-5 position-relative">
+    <header class="d-flex align-items-center justify-content-between px-4">
+      <img width="110" src="./assets/images/jsyp.svg" alt="jsyp image" class="img-fluid">
+      <h1 class="title position-relative p-3 text-capitalize fw-bold text-center">
         <span class="text-uppercase text-theme">fifa</span> tournament
       </h1>
+      <img width="180" src="./assets/images/flick.png" alt="flick mobile" class="img-fluid">
     </header>
     <main class="position-relative">
       <section id="bracket-container" class="d-flex align-items-center pt-5 px-4 mt-5 rounded"></section>
@@ -33,6 +35,7 @@
   <video autoplay muted loop src="./assets/images/video.mp4" type="video/mp4"
     class="position-fixed top-0 start-0 h-100 w-100 z-n1"></video>
   <script type="module" src="./assets/scripts/script.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <script src="https://kit.fontawesome.com/6c455eb206.js" crossorigin="anonymous"></script>
   <!-- Bootstrap JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

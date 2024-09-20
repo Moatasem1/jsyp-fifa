@@ -59,8 +59,9 @@
 }
 
 .page-content {
-    border-inline: 2px solid var(--color-text);
+    /* border-inline: 2px solid var(--color-text); */
     min-height: 100vh;
+    background-color: hsl(0, 0%, 11%, 96%);
 }
 
 video {
