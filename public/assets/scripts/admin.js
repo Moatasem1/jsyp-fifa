@@ -92,7 +92,6 @@ class RoundUi {
 
         if (roundNumber >= this.#rounds.length) return;
 
-        console.log(roundNumber + 1, Math.ceil(matchNumber / 2), winnerId, matchNumber % 2 == 1 ? 1 : 2);
         this.#updateTeamsAtMatch(roundNumber + 1, Math.ceil(matchNumber / 2), winnerId, matchNumber % 2 == 1 ? 1 : 2);
 
         const matchAtNextRound = document.querySelector(`.round[data-round='${roundNumber + 1}'] .match-card[data-match='${Math.ceil(matchNumber / 2)}']`);
@@ -102,6 +101,10 @@ class RoundUi {
         this.#updateOptions(winnerTeamCard, this.#teams.filter(team => team.winner_id === winnerId));
         this.#updateTeamImgBaseOnTeamCardId(winnerTeamCard);
         this.#handelWinnerButtonDisable(matchAtNextRound);
+
+        if (winnerId == -1) {
+            this.#setWinner(roundNumber + 1, Math.ceil(matchNumber / 2), -1, matchNumber % 2 == 1 ? 1 : 2);
+        }
     }
 
     /**
@@ -110,15 +113,19 @@ class RoundUi {
     #handelSelectionChange() {
         this.#container.addEventListener("change", event => {
             if (event.target.matches(".team-card select")) {
+                const round = event.target.closest('.round');
                 const matchCard = event.target.closest('.match-card');
                 const teamCard = event.target.closest('.team-card');
                 teamCard.dataset.team = event.target.value;
                 this.#updateTeamImgBaseOnTeamCardId(teamCard);
                 let pos = (matchCard.firstElementChild === teamCard ? 1 : 2);
-                const teamId = teamCard.dataset.team !== "default" ? Number(teamCard.dataset.team) : null;
+                //problem: if problem happen change betllow int -1 to null
+                const teamId = teamCard.dataset.team !== "-1" ? Number(teamCard.dataset.team) : -1;
                 this.#updateTeamsAtMatch(1, Number(matchCard.dataset.match), teamId, pos);
                 this.#updateOptionsForAllSelectionOnRound1();
                 this.#handelWinnerButtonDisable(matchCard);
+                if (event.target.value == '-1')
+                    this.#setWinner(Number(round.dataset.round), Number(matchCard.dataset.match), -1);
             }
         });
     }
@@ -128,7 +135,7 @@ class RoundUi {
 
         const teams = Array.from(matchCard.querySelectorAll(".team-card"));
 
-        const activeTeams = teams.filter(team => team.dataset.team != 'default');
+        const activeTeams = teams.filter(team => team.dataset.team != '-1');
 
         if (activeTeams.length == 2)
             teams.forEach(team => {
@@ -153,10 +160,6 @@ class RoundUi {
         });
     }
 
-    #unwinall(roundNumber, matchNumber) {
-
-    }
-
     /**
      * update option for on team with free option
      * @param {HTMLElement} teamCard 
@@ -167,7 +170,7 @@ class RoundUi {
         teamCard.querySelector("input").value = teamCard.dataset.team;
 
         const availableTeamsCopy = availableTeamsData.slice();
-        if (teamCard.dataset.team !== 'default')
+        if (teamCard.dataset.team !== '-1' && teamCard.dataset.team != -1)
             availableTeamsCopy.push(this.#getTeamDataById(Number(teamCard.dataset.team)));
 
         const newOptions = this.#getTeamOptionsUi(availableTeamsCopy, Number(teamCard.dataset.team));
@@ -273,7 +276,7 @@ class RoundUi {
 
     #updateTeamImgBaseOnTeamCardId(teamCard) {
         let newImage;
-        if (teamCard.dataset.team != 'default') {
+        if (teamCard.dataset.team != '-1') {
             const selectedTeamData = this.#getTeamDataById(teamCard.dataset.team);
             newImage = "teams-logos/";
             newImage += selectedTeamData.image;
@@ -331,7 +334,7 @@ class RoundUi {
 
         if (!teamsOptionsData) return;
 
-        teamsOptionsData.unshift({ id: "default", name: "select team" });
+        teamsOptionsData.unshift({ id: "-1", name: "select team" });
 
         const teamsOptionsElements = [];
 
@@ -385,13 +388,13 @@ class RoundUi {
         // Create the team card div
         const teamCard = document.createElement('div');
         teamCard.className = 'team-card text-center';
-        teamCard.dataset.team = (teamData) ? teamData.id : "default";
+        teamCard.dataset.team = (teamData) ? teamData.id : "-1";
 
         // Create the team logo image
         const img = document.createElement('img');
         img.width = 60;
         img.src = `../assets/images/${(teamData) ? "teams-logos/" + teamData.image : 'question-mark.png'}`;
-        img.alt = teamData ? teamData.name : "default";
+        img.alt = teamData ? teamData.name : "-1";
         img.className = 'img-fluid';
         teamCard.appendChild(img);
 
@@ -402,7 +405,7 @@ class RoundUi {
         let availableTeamAtThisRound = this.#getAvailabelTeamsOnRound(roundNumber);
         if (teamData)
             availableTeamAtThisRound.push(this.#getTeamDataById(teamData.id));
-        const teamsOptionsUi = this.#getTeamOptionsUi(availableTeamAtThisRound, teamData ? teamData.id : 'default');
+        const teamsOptionsUi = this.#getTeamOptionsUi(availableTeamAtThisRound, teamData ? teamData.id : '-1');
         teamsOptionsUi.forEach(team => { select.append(team); });
         teamCard.appendChild(select);
 
@@ -414,7 +417,7 @@ class RoundUi {
         input.classList.add("is-winner");
         input.checked = isWinner;
         input.disabled = true;
-        input.value = teamData ? teamData.id : "default";
+        input.value = teamData ? teamData.id : "-1";
         const span = document.createElement('span');
         span.className = 'slider rounded-pill';
         label.appendChild(input);

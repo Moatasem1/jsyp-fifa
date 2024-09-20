@@ -161,7 +161,17 @@ ul {
 }
 
 .team__img {
-    width: 1.875rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    object-fit: contain;
+}
+
+#bracket-left .team__img {
+    filter: drop-shadow(-10px 0px 8px black);
+}
+
+#bracket-right .team__img {
+    filter: drop-shadow(10px 0px 8px black);
 }
 
 /* team root node */
@@ -213,7 +223,7 @@ ul {
 
 .team::after {
     width: .4rem;
-    left: 4.5rem;
+    left: 5rem;
     z-index: 0;
 }
 
@@ -223,7 +233,7 @@ ul {
 }
 
 #bracket-right .team::after {
-    right: 4.5rem;
+    right: 5rem;
     transform: skew(45deg);
 }
 
