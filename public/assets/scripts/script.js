@@ -149,7 +149,6 @@ function launchConfetti() {
         colors: ['#FF6347', '#32CD32', '#FFD700', '#1E90FF', '#FF69B4'], // Custom colors for confetti
     });
 }
-
 class Bracket {
     /**
      * @typedef {object[]} teams

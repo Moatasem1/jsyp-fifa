@@ -76,6 +76,41 @@ video {
 }
 
 /* ----------------------- start bracket  -----------------------*/
+
+#bracket-left .round::after,
+#bracket-right .round::after {
+    content: attr(round);
+    position: absolute;
+    top: -3rem;
+}
+
+#bracket-left .round::after {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#bracket-right .round::after {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#bracket-left .pair::after,
+#bracket-right .pair::after {
+    content: attr(match);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: gray;
+}
+
+#bracket-left .pair::after {
+    right: 2rem;
+}
+
+#bracket-right .pair::after {
+    left: 2rem;
+}
+
 /* pairss in diff levels */
 
 #bracket-container {
