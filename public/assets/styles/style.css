@@ -301,6 +301,14 @@ ul {
     right: calc(100% - 1.5rem);
 }
 
+/*final animation*/
+
+.winner-container .team.move {
+    bottom: 100% !important;
+    scale: 1.4;
+}
+
+
 
 /* @keyframes move-horizontal-left {
     0% {

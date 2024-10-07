@@ -237,13 +237,18 @@ class Bracket {
      * @returns {HTMLElement}
      */
     #getCupImageAsHTMLElement() {
+        const winnerDiv = document.createElement("div");
+        winnerDiv.classList.add("winner-container", "position-relative", "h-100");
+        winnerDiv.style.minWidth = '260px';
+        winnerDiv.style.minHeight = '80vh';
+
         const cupImg = document.createElement("img");
-
         cupImg.src = "./assets/images/mario-cup.png";
-        cupImg.classList.add("img-fluid", "z-1");
-        cupImg.style.minWidth = '260px';
+        cupImg.classList.add("img-fluid", "z-1", "position-absolute", "top-50", "translate-middle-y", "start-0");
 
-        return cupImg;
+        winnerDiv.appendChild(cupImg);
+
+        return winnerDiv;
     }
 
     /**
@@ -434,16 +439,78 @@ class Bracket {
         this.#setMatchTeamsHelper({ round: 1, match: matchNumber, team1_id: team1Id, team2_id: team2Id });
     }
 
+    #finalWinnerAnimation() {
+        function multipleBursts() {
+            const duration = 3 * 1000; // 3 seconds
+            const end = Date.now() + duration;
+
+            const interval = setInterval(function () {
+                confetti({
+                    particleCount: 50,
+                    startVelocity: 30,
+                    spread: 360,
+                    origin: {
+                        x: Math.random(),
+                        y: Math.random() - 0.2
+                    }
+                });
+
+                if (Date.now() > end) {
+                    clearInterval(interval);
+                }
+            }, 250);
+        }
+        function startConfettiRain() {
+            const duration = 3000; // Confetti rain duration in milliseconds
+            const end = Date.now() + duration;
+
+            (function frame() {
+                // Launch confetti with more particles for a denser effect
+                confetti({
+                    particleCount: 10, // More particles for denser rain
+                    spread: 60,
+                    startVelocity: 50, // Faster initial speed
+                    angle: 90, // Falls straight down
+                    gravity: 2, // Gravity to make particles fall faster
+                    ticks: 200, // Duration each particle stays on the screen
+                    origin: { x: Math.random(), y: 0 } // Random starting position at the top
+                });
+
+                // Continue animation until the duration ends
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            })();
+        }
+
+        // startConfettiRain();
+        multipleBursts();
+    }
+
     updateWinner(roundNumber, matchNumber, winnerTeamId) {
 
+        if (this.#isFinalRound(roundNumber)) {
+            let winnerTeam = this.#layoutContainer.mainContainer.querySelectorAll(`.team[id="${winnerTeamId}"]`);
+            const winnerContainer = this.#layoutContainer.mainContainer.querySelector(".winner-container");
+            const newWinner = winnerTeam[0].cloneNode(true);
+            newWinner.classList.add("bottom-0");
+            this.#finalWinnerAnimation();
+            winnerContainer.appendChild(newWinner);
+            newWinner.offsetHeight;
+            newWinner.classList.add("move");
+            return;
+        }
+
+
         let matchContainer = this.#layoutContainer.mainContainer.querySelector(`.round[round="${roundNumber}"] .pair[match="${matchNumber}"]`);
+
         const teams = matchContainer.querySelectorAll(".team");
 
         if (teams.length > 2) teams[2].remove();
         else {
-            if (roundNumber > 1) matchContainer.innerHTML = '';
+            // if () matchContainer.innerHTML = '';
 
-            else if (roundNumber <= this.#rounds.length) {
+            if (roundNumber > 1 && roundNumber <= this.#rounds.length - 2) {
                 let matchContainer = this.#layoutContainer.mainContainer.querySelector(`.round[round="${roundNumber + 1}"] .pair[match="${Math.ceil(matchNumber / 2)}"]`);
                 const teams = matchContainer.querySelectorAll(".team");
 
